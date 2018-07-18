@@ -46,7 +46,6 @@ function addClickHandlersToElements() {
        none
  */
 function handleAddClicked() {
-    debugger
     addStudent();
 }
 /***************************************************************************************************
