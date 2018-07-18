@@ -4,7 +4,7 @@
     $error = '';
     $username = $_POST['username'];
     $pass = $_POST['password']; 
-    if(array_key_exists("submit", $_POST)){
+    if(array_key_exists("signup", $_POST)){
         $query = "SELECT id FROM `users` WHERE username = '".mysqli_real_escape_string($conn, $_POST['username'])."' LIMIT 1";
         $result = mysqli_query($conn, $query);
         if(mysqli_num_rows($result) > 0){
@@ -16,6 +16,9 @@
             } else {
                 $query = "UPDATE `users` SET password = '".md5(md5(mysqli_insert_id($conn)).$_POST['password'])."' WHERE id = ".mysqli_insert_id($conn)." LIMIT 1";
                 mysqli_query($conn, $query);
+                $_SESSION['id'] = mysqli_insert_id($conn);
+                setcookie("id", mysqli_insert_id($conn), time() + 60*60*24*365);
+                readfile("loggedin.php");
             }
         }
     }
@@ -31,10 +34,15 @@
 </head>
 <body> 
     <div id="error"><?php echo $error ?></div>
-    <form method="post">
+    <form method="post" id="signup">
         <input type="text" name="username" placeholder=" Enter Username">
         <input type="password" name="password" placeholder="Enter Password">
-        <input type="submit" name="submit">
+        <input type="submit" name="signup">
+    </form>
+    <form method="post" id="login">
+        <input type="text" name="username" placeholder=" Enter Username">
+        <input type="password" name="password" placeholder="Enter Password">
+        <input type="submit" name="login">
     </form>
 </body>
 </html>
