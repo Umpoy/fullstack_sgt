@@ -1,8 +1,23 @@
 <?php
+    session_start();
+    require_once("connect.php");
+    $error = '';
     $username = $_POST['username'];
     $pass = $_POST['password']; 
     if(array_key_exists("submit", $_POST)){
-        echo $username . " " . $pass;
+        $query = "SELECT id FROM `users` WHERE username = '".mysqli_real_escape_string($conn, $_POST['username'])."' LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        if(mysqli_num_rows($result) > 0){
+            $error = "That email address is taken.";
+        } else {
+            $query = "INSERT INTO `users` (`username`, `password`) VALUES ('".mysqli_real_escape_string($conn, $_POST['username'])."', '".mysqli_real_escape_string($conn, $_POST['password'])."')";            
+            if(!mysqli_query($conn, $query)){
+                $error = "<p>Could not sign you up - please try again later.</p>";
+            } else {
+                $query = "UPDATE `users` SET password = '".md5(md5(mysqli_insert_id($conn)).$_POST['password'])."' WHERE id = ".mysqli_insert_id($conn)." LIMIT 1";
+                mysqli_query($conn, $query);
+            }
+        }
     }
 ?>
 <!doctype html>
@@ -14,7 +29,8 @@
     <script src="js/script.js"></script>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
 </head>
-<body>  
+<body> 
+    <div id="error"><?php echo $error ?></div>
     <form method="post">
         <input type="text" name="username" placeholder=" Enter Username">
         <input type="password" name="password" placeholder="Enter Password">
