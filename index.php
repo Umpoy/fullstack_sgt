@@ -1,3 +1,10 @@
+<?php
+    $username = $_POST['username'];
+    $pass = $_POST['password']; 
+    if(array_key_exists("submit", $_POST)){
+        echo $username . " " . $pass;
+    }
+?>
 <!doctype html>
 <html>
 <head>
@@ -11,6 +18,7 @@
     <form method="post">
         <input type="text" name="username" placeholder=" Enter Username">
         <input type="password" name="password" placeholder="Enter Password">
+        <input type="submit" name="submit">
     </form>
 </body>
 </html>
