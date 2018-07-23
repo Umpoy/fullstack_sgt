@@ -11,11 +11,14 @@
         if(mysqli_num_rows($result) > 0){
             $error = "That email address is taken.";
         } else {
-            $query = "INSERT INTO `users` (`username`, `password`) VALUES ('".mysqli_real_escape_string($conn, $_POST['username'])."', '".md5(md5(mysqli_insert_id($conn)).$_POST['password'])."')";            
+            $query = "INSERT INTO `users` (`username`, `password`) VALUES ('".mysqli_real_escape_string($conn, $_POST['username'])."', '".mysqli_real_escape_string($conn, $_POST['password'])."')";            
             if(!mysqli_query($conn, $query)){
                 $error = "<p>Could not sign you up - please try again later.</p>";
-            } else {            
+            } else {
+                $query = "UPDATE `users` SET password = '".md5(md5(mysqli_insert_id($conn)).$_POST['password'])."' WHERE id = ".mysqli_insert_id($conn)." LIMIT 1";
+                mysqli_query($conn, $query);
                 $_SESSION['id'] = mysqli_insert_id($conn);
+                // setcookie("id", mysqli_insert_id($conn), time() + 60*60*24*365);
                 readfile("loggedin.php");
             }
         }
