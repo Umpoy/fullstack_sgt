@@ -5,13 +5,13 @@
     <form method="post" id="signup" autocomplete="off" class="animated fadeInUp">
         <input type="text" name="username" placeholder=" Enter Username" class="form-control">
         <input type="password" name="password" placeholder="Enter Password" class="form-control">
-        <input type="submit" name="signup" value="Sign Up">
+        <input type="submit" name="signup" value="Sign Up" class="btn btn-success">
         <p>Already Signed Up? <a class="toggle btn">Log In</a></p>
     </form>
     <form method="post" id="login" autocomplete="off" class="animated fadeInUp">
         <input type="text" name="username" placeholder=" Enter Username" class="form-control">
         <input type="password" name="password" placeholder="Enter Password" class="form-control">
-        <input type="submit" name="login" value="Log In">
+        <input type="submit" name="login" value="Log In" class="btn btn-success">
         <p>New User? <a class="toggle btn">Sign Up!</a></p>
     </form>
 

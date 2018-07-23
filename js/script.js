@@ -43,7 +43,9 @@ function addClickHandlersToElements() {
     $('.toggle').on('click', function () {
         $("#signup").toggle();
         $("#login").toggle();
-    })
+    });
+    $('.cancel').on('click', handleCancelClick);
+    $('.getData').on('click', getData);
 }
 /***************************************************************************************************
  * handleAddClicked - Event Handler when user clicks the add button
@@ -103,19 +105,21 @@ function addStudent() {
     if (inputValid === false) {
         return
     } else {
-        console.log("newstudent: ", newStudent);
         sendToDataBase(newStudent);
-        //student_array.push(newStudent);
+        student_array.push(newStudent);
         updateStudentList(newStudent);
-        clearAddStudentFormInputs();
+        clearAddStudentFormInputs(true);
         $('div .form-group').removeClass('has-error');
     }
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
-function clearAddStudentFormInputs() {
+function clearAddStudentFormInputs(click) {
     $('div .form-group').removeClass('has-error');
+    if (!click) {
+        $('div .form-group').removeClass('has-success');
+    }
     $('input').val('');
 }
 /***************************************************************************************************
@@ -142,9 +146,9 @@ function renderStudentOnDom(newStudent) {
  */
 function updateStudentList(newStudent) {
     getData();
-    // renderStudentOnDom(newStudent);
-    // calculateGradeAverage(student_array);
-    // renderGradeAverage(gradeAverage);
+    renderStudentOnDom(newStudent);
+    calculateGradeAverage(student_array);
+    renderGradeAverage(gradeAverage);
 }
 /***************************************************************************************************
  * calculateGradeAverage - loop through the global student array and calculate average grade and return that value

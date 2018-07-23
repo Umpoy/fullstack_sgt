@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-size: 100% !important;
+    #font-size: 100% !important;
 }
 
 
@@ -25,12 +25,16 @@ form > input {
     width: 50%;
 }
 
-/* form > * {
-    margin-bottom: 1%;
-} */
+form > * {
+    margin-bottom: 2%;
+}
 
 #login {
     display: none;
+}
+
+#logout {
+    float: right;
 }
 
 /* small {
