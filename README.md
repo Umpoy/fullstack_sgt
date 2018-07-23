@@ -1,5 +1,7 @@
 # Student Grade Table
 
+![](img/sgt.png)
+
 ## Technologies: HTML, CSS, Bootstrap, Javascript, jQuery, PHP, MySQL
 
 ## Description
