@@ -62,7 +62,7 @@
 </head>
 <body>
     <?php
-        if(!$_SESSION['id']){
+        if(!isset($_SESSION['id'])){
             readfile("form.php");
         }
     ?>
