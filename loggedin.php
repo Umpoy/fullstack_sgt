@@ -1,5 +1,6 @@
-<a href="logout.php" >Logout</a>
+
 <div class="container">
+<a href="logout.php" >Logout</a>
     <div class="page-header">
         <!-- only show this element when the isnt on mobile -->
         <h1 class="hidden-xs">Student Grade Table

@@ -40,6 +40,10 @@ function initializeApp() {
 function addClickHandlersToElements() {
     $('.add').on('click', handleAddClicked);
     $('tbody').on('click', '.btn', deleteStudentRow);
+    $('.toggle').on('click', function () {
+        $("#signup").toggle();
+        $("#login").toggle();
+    })
 }
 /***************************************************************************************************
  * handleAddClicked - Event Handler when user clicks the add button

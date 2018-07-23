@@ -56,9 +56,12 @@
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+    <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <title>Student Grade Table</title>
 </head>
 <body>
     <?php
@@ -66,6 +69,7 @@
             readfile("form.php");
         }
     ?>
+    <script src="js/script.js"></script>
 </body>
 </html>
 
