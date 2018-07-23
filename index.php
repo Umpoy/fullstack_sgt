@@ -34,7 +34,6 @@
                     // echo "SESSION: ". $_SESSION['id'];
                     // echo "ROW: ". $row['id'];                    
                     // setcookie("id", $row['id'], time() + 60*60*24*365);
-                   
                     readfile("loggedin.php");                        
                 } else {                    
                     $error = "That username/password combination could not be found.";                    
@@ -43,11 +42,13 @@
                 $error = "That username/password combination could not be found.";                
             }
     }
+    if(array_key_exists("post", $_POST)){
+        echo "good";
+        //readfile("loggedin.php");
+    }
     if(array_key_exists("id", $_COOKIE) && $_COOKIE['id']){
         $_SESSION['id'] = $_COOKIE['id'];
-    }
-    if(array_key_exists("id", $_SESSION)){
-        echo $_SESSION['id'] ;
+        readfile("loggedin.php"); 
     }
 ?>
 <!doctype html>
@@ -62,7 +63,7 @@
 <body>
 
     <div id="error"><?php echo $error ?></div>
-    <a href="logout.php" >Logout</a>
+    
     <form method="post" id="signup">
         <input type="text" name="username" placeholder=" Enter Username">
         <input type="password" name="password" placeholder="Enter Password">

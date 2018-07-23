@@ -97,7 +97,7 @@ function addStudent() {
     if (inputValid === false) {
         return
     } else {
-        //insert ajax call here
+        sendToDataBase(newStudent);
         student_array.push(newStudent);
         updateStudentList(newStudent);
         clearAddStudentFormInputs();
@@ -163,6 +163,23 @@ function calculateGradeAverage(student_array) {
 function renderGradeAverage(gradeAverage) {
     $('.avgGrade').text(Math.floor(gradeAverage))
 }
+
+
+function sendToDataBase(newStudent) {
+    $.ajax({
+        url: './updateDatabase.php',
+        data: {
+            'name': newStudent.name,
+            'grade': newStudent.grade,
+            'course': newStudent.course
+        },
+        type: 'post',
+        success: function (output) {
+        }
+    });
+}
+
+
 
 
 

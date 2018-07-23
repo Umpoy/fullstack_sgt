@@ -1,3 +1,4 @@
+<a href="logout.php" >Logout</a>
 <div class="container">
     <div class="page-header">
         <!-- only show this element when the isnt on mobile -->
@@ -9,6 +10,7 @@
             <small class="pull-right">Grade Average : <span class="label label-default avgGrade"></span></small>
         </h3>
     </div>
+
 
     <div class="student-add-form col-md-3 pull-right">
         <h4>Add Student</h4>
@@ -23,19 +25,20 @@
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
             <input type="text" class="form-control" name="course" id="course"
-                   placeholder="Student Course">
+                placeholder="Student Course">
         </div>
         <div class="form-group input-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
             </span>
             <input type="text" class="form-control" name="studentGrade" id="studentGrade"
-                   placeholder="Student Grade">
+                placeholder="Student Grade">
         </div>
         <button type="button" class="btn btn-success btn-block add">Add</button>
         <button type="button" class="btn btn-default cancel btn-block">Cancel</button>
         <button type="button" class="btn btn-info getData btn-block">Get Data From Server</button>
     </div>
+
 
     <div class="col-xs-12 student-list-container col-md-9">
         <table class="student-list table table-hover">
@@ -48,7 +51,21 @@
             </tr>
             </thead>
             <tbody>
-
+            <?php
+                session_start();
+                include("connect.php");
+                if(array_key_exists("id", $_SESSION)){
+                    $user_id = $_SESSION['id'];
+                    echo $user_id;
+                    $query = "SELECT `s_name`, `s_course`, `s_grade` FROM `post` WHERE user_id = $user_id";
+                    $result = $conn->query($query);
+                    if($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                            echo "<td>".$row['s_name']."</td>";
+                        }
+                    }
+                }
+            ?>
             </tbody>
         </table>
     </div>
