@@ -66,7 +66,7 @@
 <body>
     <?php
         if(!isset($_SESSION['id'])){
-            readfile("form.php");
+            include("form.php");
         }
     ?>
     <script src="js/script.js"></script>
