@@ -2,8 +2,9 @@
     session_start();
     require_once("connect.php");
     $error = '';
-    $username = $_POST['username'];
-    $pass = $_POST['password']; 
+    // $username = $_POST['username'];
+    // $pass = $_POST['password'];
+ 
     if(array_key_exists("signup", $_POST)){
         $query = "SELECT id FROM `users` WHERE username = '".mysqli_real_escape_string($conn, $_POST['username'])."' LIMIT 1";
         $result = mysqli_query($conn, $query);
@@ -17,10 +18,36 @@
                 $query = "UPDATE `users` SET password = '".md5(md5(mysqli_insert_id($conn)).$_POST['password'])."' WHERE id = ".mysqli_insert_id($conn)." LIMIT 1";
                 mysqli_query($conn, $query);
                 $_SESSION['id'] = mysqli_insert_id($conn);
-                setcookie("id", mysqli_insert_id($conn), time() + 60*60*24*365);
+                // setcookie("id", mysqli_insert_id($conn), time() + 60*60*24*365);
                 readfile("loggedin.php");
             }
         }
+    }
+    if(array_key_exists("login", $_POST)){
+        $query = "SELECT * FROM `users` WHERE username = '".mysqli_real_escape_string($conn, $_POST['username'])."'";       
+            $result = mysqli_query($conn, $query);        
+            $row = mysqli_fetch_array($result);        
+            if (isset($row)) {                
+                $hashedPassword = md5(md5($row['id']).$_POST['password']);                
+                if ($hashedPassword == $row['password']) {                    
+                    $_SESSION['id'] = $row['id'];
+                    // echo "SESSION: ". $_SESSION['id'];
+                    // echo "ROW: ". $row['id'];                    
+                    // setcookie("id", $row['id'], time() + 60*60*24*365);
+                   
+                    readfile("loggedin.php");                        
+                } else {                    
+                    $error = "That username/password combination could not be found.";                    
+                }                
+            } else {                
+                $error = "That username/password combination could not be found.";                
+            }
+    }
+    if(array_key_exists("id", $_COOKIE) && $_COOKIE['id']){
+        $_SESSION['id'] = $_COOKIE['id'];
+    }
+    if(array_key_exists("id", $_SESSION)){
+        echo $_SESSION['id'] ;
     }
 ?>
 <!doctype html>
@@ -32,8 +59,10 @@
     <script src="js/script.js"></script>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
 </head>
-<body> 
+<body>
+
     <div id="error"><?php echo $error ?></div>
+    <a href="logout.php" >Logout</a>
     <form method="post" id="signup">
         <input type="text" name="username" placeholder=" Enter Username">
         <input type="password" name="password" placeholder="Enter Password">
