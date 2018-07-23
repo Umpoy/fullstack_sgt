@@ -51,21 +51,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php
-                session_start();
-                include("connect.php");
-                if(array_key_exists("id", $_SESSION)){
-                    $user_id = $_SESSION['id'];
-                    echo $user_id;
-                    $query = "SELECT `s_name`, `s_course`, `s_grade` FROM `post` WHERE user_id = $user_id";
-                    $result = $conn->query($query);
-                    if($result->num_rows > 0){
-                        while($row = $result->fetch_assoc()){
-                            echo "<td>".$row['s_name']."</td>";
-                        }
-                    }
-                }
-            ?>
+                <!-- table data will show where -->
             </tbody>
         </table>
     </div>

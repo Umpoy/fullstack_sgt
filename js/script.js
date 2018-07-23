@@ -29,6 +29,7 @@ var gradeAverage = 0;
 */
 function initializeApp() {
     addClickHandlersToElements();
+    getData();
 }
 /***************************************************************************************************
 * addClickHandlerstoElements
@@ -179,7 +180,25 @@ function sendToDataBase(newStudent) {
     });
 }
 
+function getData() {
+    $.ajax({
+        // dataType: 'json',
+        url: 'grabFromDatabase.php',
+        // method: 'post', // ?
+        success: function (server) {
+            // $('tbody').find('tr').remove()
+            // student_array = server.data
+            // for (var i = 0; i < server.data.length; i++) {
+            //     var newStudent = server.data[i];
+            //     renderStudentOnDom(newStudent)
+            // }
+            // calculateGradeAverage(student_array);
+            // renderGradeAverage(gradeAverage);
+            console.log("server: ", server);
+        }
+    });
 
+}
 
 
 
