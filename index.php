@@ -61,19 +61,11 @@
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
 </head>
 <body>
-
-    <div id="error"><?php echo $error ?></div>
-    
-    <form method="post" id="signup">
-        <input type="text" name="username" placeholder=" Enter Username">
-        <input type="password" name="password" placeholder="Enter Password">
-        <input type="submit" name="signup">
-    </form>
-    <form method="post" id="login">
-        <input type="text" name="username" placeholder=" Enter Username">
-        <input type="password" name="password" placeholder="Enter Password">
-        <input type="submit" name="login">
-    </form>
+    <?php
+        if(!$_SESSION['id']){
+            readfile("form.php");
+        }
+    ?>
 </body>
 </html>
 

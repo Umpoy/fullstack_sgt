@@ -5,7 +5,7 @@
     // if(array_key_exists("data", $_POST)){
         //stuff
         //$query = "SELECT * FROM `post` WHERE user_id = ".mysqli_real_escape_string($conn, $user_id)." LIMIT 1";
-        $query = "SELECT `s_name`, `s_course`, `s_grade` FROM `post` WHERE user_id = $user_id";
+        $query = "SELECT `id`, `s_name`, `s_course`, `s_grade` FROM `post` WHERE user_id = $user_id";
         // $row = mysqli_query($conn, $query);
       
         $json = array();
@@ -13,6 +13,7 @@
         while($row = mysqli_fetch_array ($result))     
         {
             $server = array(
+                'id' => $row['id'],
                 'name' => $row['s_name'],
                 'course' => $row['s_course'],
                 'grade' => $row['s_grade']

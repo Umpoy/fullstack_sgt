@@ -39,6 +39,7 @@ function initializeApp() {
 */
 function addClickHandlersToElements() {
     $('.add').on('click', handleAddClicked);
+    $('tbody').on('click', '.btn', deleteStudentRow);
 }
 /***************************************************************************************************
  * handleAddClicked - Event Handler when user clicks the add button
@@ -98,8 +99,9 @@ function addStudent() {
     if (inputValid === false) {
         return
     } else {
+        console.log("newstudent: ", newStudent);
         sendToDataBase(newStudent);
-        student_array.push(newStudent);
+        //student_array.push(newStudent);
         updateStudentList(newStudent);
         clearAddStudentFormInputs();
         $('div .form-group').removeClass('has-error');
@@ -122,7 +124,7 @@ function renderStudentOnDom(newStudent) {
     var tableName = $('<td>').text(newStudent.name)
     var tabelCourse = $('<td>').text(newStudent.course)
     var tableGrade = $('<td>').text(newStudent.grade)
-    var tableButton = $('<button>').addClass('btn btn-danger').text('Delete')
+    var tableButton = $('<button>').addClass('btn btn-danger delete').text('Delete')
     var tableDelete = $('<td>').append(tableButton)
     tableRow.append(tableName, tabelCourse, tableGrade, tableDelete)
     $('tbody').append(tableRow);
@@ -135,9 +137,10 @@ function renderStudentOnDom(newStudent) {
  * @calls renderStudentOnDom, calculateGradeAverage, renderGradeAverage
  */
 function updateStudentList(newStudent) {
-    renderStudentOnDom(newStudent);
-    calculateGradeAverage(student_array);
-    renderGradeAverage(gradeAverage);
+    getData();
+    // renderStudentOnDom(newStudent);
+    // calculateGradeAverage(student_array);
+    // renderGradeAverage(gradeAverage);
 }
 /***************************************************************************************************
  * calculateGradeAverage - loop through the global student array and calculate average grade and return that value
@@ -182,22 +185,43 @@ function sendToDataBase(newStudent) {
 
 function getData() {
     $.ajax({
-        // dataType: 'json',
+        dataType: 'json',
         url: 'grabFromDatabase.php',
-        // method: 'post', // ?
         success: function (server) {
-            // $('tbody').find('tr').remove()
-            // student_array = server.data
-            // for (var i = 0; i < server.data.length; i++) {
-            //     var newStudent = server.data[i];
-            //     renderStudentOnDom(newStudent)
-            // }
-            // calculateGradeAverage(student_array);
-            // renderGradeAverage(gradeAverage);
             console.log("server: ", server);
+            $('tbody').find('tr').remove()
+            student_array = server;
+            console.log("student 1:", student_array[0]);
+            for (var i = 0; i < server.length; i++) {
+                var newStudent = server[i];
+                renderStudentOnDom(newStudent)
+            }
+            calculateGradeAverage(student_array);
+            renderGradeAverage(gradeAverage);
+
         }
     });
+}
 
+function deleteStudentRow() {
+    var indexOfStudent = $(this).parent().parent().index();
+    var idOfStudent = student_array[indexOfStudent].id
+    deleteStudentFromDB(idOfStudent);
+    student_array.splice(indexOfStudent, 1);
+    $(this).parent().closest('tr').remove();
+    calculateGradeAverage(student_array);
+    renderGradeAverage(gradeAverage);
+}
+
+function deleteStudentFromDB(id) {
+    $.ajax({
+        url: "deleteFromDatabase.php",
+        data: { id: id },
+        type: 'post',
+        success: function () {
+            console.log("Student Deleted");
+        }
+    })
 }
 
 
