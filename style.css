@@ -2,13 +2,7 @@
     box-sizing: border-box;
 }
 
-
-
 a { color: inherit; } 
-
-/* .black {
-    color: black !important;
-} */
 
 .container {
     margin-top: 1%;
@@ -21,7 +15,6 @@ a { color: inherit; }
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-
 }
 
 form > input {
@@ -40,8 +33,3 @@ form input {
 #logout {
     float: right;
 }
-
-/* small {
-    color: white !important;
-} */
-

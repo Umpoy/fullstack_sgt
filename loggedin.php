@@ -11,8 +11,6 @@
             <small class="pull-right">Grade Average : <span class="label label-default avgGrade"></span></small>
         </h3>
     </div>
-
-
     <div class="student-add-form col-md-3 pull-right">
         <h4>Add Student</h4>
         <div class="form-group input-group">
@@ -39,8 +37,6 @@
         <button type="button" class="btn btn-default cancel btn-block">Cancel</button>
         <button type="button" class="btn btn-info getData btn-block">Get Data From Server</button>
     </div>
-
-
     <div class="col-xs-12 student-list-container col-md-9">
         <table class="student-list table table-hover">
             <thead>
