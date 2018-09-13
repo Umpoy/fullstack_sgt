@@ -2,6 +2,13 @@
     session_start();
     require_once("connect.php");
     $error = '';
+    if(array_key_exists("logout", $_GET)){
+        unset($_SESSION);
+        setcookie("id", "", time() - 60*60);
+        $_COOKIE["id"] = "";
+    } else if((array_key_exists("id", $_SESSION) AND $_SESSION['id']) OR (array_key_exists("id", $_COOKIE) AND $_COOKIE["id"])){
+        echo "";
+    }
     if(array_key_exists("signup", $_POST)){
         $query = "SELECT id FROM `users` WHERE username = '".mysqli_real_escape_string($conn, $_POST['username'])."' LIMIT 1";
         $result = mysqli_query($conn, $query);
