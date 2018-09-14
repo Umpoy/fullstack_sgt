@@ -22,7 +22,7 @@
                 $query = "UPDATE `users` SET password = '".md5(md5(mysqli_insert_id($conn)).$_POST['password'])."' WHERE id = ".mysqli_insert_id($conn)." LIMIT 1";
                 mysqli_query($conn, $query);
                 $_SESSION['id'] = mysqli_insert_id($conn);
-                readfile("loggedin.php");
+                header("Location: loggedin.php");
             }
         }
     }
@@ -33,8 +33,8 @@
             if (isset($row)) {                
                 $hashedPassword = md5(md5($row['id']).$_POST['password']);                
                 if ($hashedPassword == $row['password']) {                    
-                    $_SESSION['id'] = $row['id'];
-                    readfile("loggedin.php");                        
+                    $_SESSION['id'] = $row['id'];        
+                    header("Location: index.php");                        
                 } else {                    
                     $error = "That username/password combination could not be found.";                    
                 }                
@@ -42,13 +42,13 @@
                 $error = "That username/password combination could not be found.";                
             }
     }
-    if(array_key_exists("post", $_POST)){
-        echo "good";
-    }
-    if(array_key_exists("id", $_COOKIE) && $_COOKIE['id']){
-        $_SESSION['id'] = $_COOKIE['id'];
-        readfile("loggedin.php"); 
-    }
+    // if(array_key_exists("post", $_POST)){
+    //     echo "good";
+    // }
+    // if(array_key_exists("id", $_COOKIE) && $_COOKIE['id']){
+    //     $_SESSION['id'] = $_COOKIE['id'];
+    //     header("Location: loggedin.php"); 
+    // }
 ?>
 <!doctype html>
 <html>
@@ -60,11 +60,22 @@
     <title>Student Grade Table</title>
 </head>
 <body>
-    <?php
-        if(!isset($_SESSION['id'])){
-            include("form.php");
-        }
-    ?>
+<div class="hero">
+    <h1 class="animated fadeInDown">Student Grade Table</h1>
+    <div> <?php echo $error; ?> </div>
+    <form method="post" id="signup" autocomplete="off" class="animated fadeInUp">
+        <input type="text" name="username" placeholder=" Enter Username" class="form-control" required pattern="[a-zA-Z0-9_-]{3,12}" title="Must be alphanumeric in 3-12 chars">
+        <input type="password" name="password" placeholder="Enter Password" class="form-control" pattern="[a-zA-Z0-9_-]{8,}" required title="(8 alphanumeric chars minimum)">
+        <input type="submit" name="signup" value="Sign Up" class="btn btn-success">
+        <p>Already Signed Up? <a class="toggle btn btn-info">Log In</a></p>
+    </form>
+    <form method="post" id="login" autocomplete="off" class="animated fadeInUp">
+        <input type="text" name="username" placeholder=" Enter Username" class="form-control">
+        <input type="password" name="password" placeholder="Enter Password" class="form-control">
+        <input type="submit" name="login" value="Log In" class="btn btn-success">
+        <p>New User? <a class="toggle btn btn-info">Sign Up!</a></p><input type="checkbox" name="stayLoggedIn" value=1 checked>
+    </form>
+</div>
     <script src="js/script.js"></script>
 </body>
 </html>

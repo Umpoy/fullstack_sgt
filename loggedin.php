@@ -1,4 +1,13 @@
-
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <title>Student Grade Table</title>
+</head>
+<body>
 <div class="container">
 <a href="logout.php" id="logout" class="btn btn-danger">Logout</a>
     <div class="page-header">
@@ -53,3 +62,5 @@
         </table>
     </div>
 </div>
+</body>
+</html>
